@@ -2,7 +2,7 @@ package org.village.connect.resources;
 
 import static com.google.common.html.HtmlEscapers.htmlEscaper;
 
-import org.village.connect.connectConfiguration;
+import org.village.connect.VillageConnectConfiguration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -27,7 +27,7 @@ public class HelloWorldResource {
 
     @Inject
     @VisibleForTesting
-    connectConfiguration configuration;
+    VillageConnectConfiguration configuration;
 
     /** Prints Hello, World! on HTML. */
     @GET

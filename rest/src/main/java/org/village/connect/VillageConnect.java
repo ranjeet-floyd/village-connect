@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 /**
  * Dropwizard based application launcher.
  */
-public class connect extends Application<connectConfiguration> {
+public class VillageConnect extends Application<VillageConnectConfiguration> {
 
     /**
      * Java entry point.
@@ -25,14 +25,14 @@ public class connect extends Application<connectConfiguration> {
      * @throws Exception an error occurred.
      */
     public static void main(String[] args) throws Exception {
-        new connect().run(args);
+        new VillageConnect().run(args);
     }
 
     /**
      * @see io.dropwizard.Application#initialize(io.dropwizard.setup.Bootstrap)
      */
     @Override
-    public void initialize(Bootstrap<connectConfiguration> bootstrap) {
+    public void initialize(Bootstrap<VillageConnectConfiguration> bootstrap) {
         // Enable variable substitution with environment variables
         bootstrap.setConfigurationSourceProvider(new SubstitutingSourceProvider(
                 bootstrap.getConfigurationSourceProvider(), new EnvironmentVariableSubstitutor(false)));
@@ -45,13 +45,13 @@ public class connect extends Application<connectConfiguration> {
      * @see io.dropwizard.Application#run(io.dropwizard.Configuration, io.dropwizard.setup.Environment)
      */
     @Override
-    public void run(connectConfiguration configuration, Environment environment) {
+    public void run(VillageConnectConfiguration configuration, Environment environment) {
         // Common modules
         environment.jersey().register(new AbstractBinder() {
             @Override
             protected void configure() {
                 // Configuration
-                bind(configuration).to(connectConfiguration.class);
+                bind(configuration).to(VillageConnectConfiguration.class);
             }
         });
 

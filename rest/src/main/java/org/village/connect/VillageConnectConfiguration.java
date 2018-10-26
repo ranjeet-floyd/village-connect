@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 /**
  * Dropwizard based application's configuration.
  */
-public class connectConfiguration extends Configuration {
+public class VillageConnectConfiguration extends Configuration {
 
     @Valid
     @NotNull
