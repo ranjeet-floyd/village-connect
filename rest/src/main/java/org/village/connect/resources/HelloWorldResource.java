@@ -1,8 +1,8 @@
-package org.village.resources;
+package org.village.connect.resources;
 
 import static com.google.common.html.HtmlEscapers.htmlEscaper;
 
-import org.village.connectConfiguration;
+import org.village.connect.connectConfiguration;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;

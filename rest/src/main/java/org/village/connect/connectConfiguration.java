@@ -1,4 +1,4 @@
-package org.village;
+package org.village.connect;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;

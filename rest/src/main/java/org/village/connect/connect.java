@@ -1,4 +1,4 @@
-package org.village;
+package org.village.connect;
 
 import com.google.common.reflect.ClassPath;
 import com.google.common.reflect.ClassPath.ClassInfo;
