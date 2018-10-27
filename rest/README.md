@@ -11,3 +11,6 @@ How to start the application.
 ## Health Check
 
 To see your applications health enter url `http://localhost:8081/healthcheck`
+
+## How to run Mysql
+	docker run --p 3306:3306  --name=docker-mysql -v /Users/ranjeet.kumar/rakuten/install/local-mysql:/var/lib/mysql -d mysql/mysql-server
