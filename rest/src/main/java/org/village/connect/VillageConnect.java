@@ -1,5 +1,9 @@
 package org.village.connect;
 
+import org.village.connect.dao.UserDao;
+import org.village.connect.resources.UserResource;
+import org.village.connect.service.UserService;
+
 import com.google.common.reflect.ClassPath;
 import com.google.common.reflect.ClassPath.ClassInfo;
 import io.dropwizard.Application;
@@ -9,14 +13,22 @@ import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
+import org.jdbi.v3.core.Jdbi;
+import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 
 import java.io.IOException;
 import java.util.function.Consumer;
 
+import javax.sql.DataSource;
+
 /**
+ * @author ranjeet.kumar
  * Dropwizard based application launcher.
  */
 public class VillageConnect extends Application<VillageConnectConfiguration> {
+    
+    private static final String SQL = "sql";
+    private static final String VILLAGE_CONNECT_REST_SERVICE = "Village connect rest service";
 
     /**
      * Java entry point.
@@ -46,6 +58,12 @@ public class VillageConnect extends Application<VillageConnectConfiguration> {
      */
     @Override
     public void run(VillageConnectConfiguration configuration, Environment environment) {
+        // Datasource configuration
+        final DataSource dataSource =
+            configuration.getDataSourceFactory().build(environment.metrics(), SQL);
+        
+        Jdbi jdbi = Jdbi.create(dataSource);
+        jdbi.installPlugin(new SqlObjectPlugin());
         // Common modules
         environment.jersey().register(new AbstractBinder() {
             @Override
@@ -54,9 +72,12 @@ public class VillageConnect extends Application<VillageConnectConfiguration> {
                 bind(configuration).to(VillageConnectConfiguration.class);
             }
         });
+        // register user resource service
+        UserDao userDao =  jdbi.onDemand(UserDao.class);
+        environment.jersey().register(new UserResource(new UserService(userDao)));
 
         // Resources
-        registerModules("org.village.resources", "Resource", (classInfo) -> {
+        registerModules("org.village.connect.resources", "Resource", (classInfo) -> {
             environment.jersey().register(classInfo.load());
         });
     }

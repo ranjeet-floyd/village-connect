@@ -12,24 +12,20 @@ import javax.validation.constraints.NotNull;
  */
 public class VillageConnectConfiguration extends Configuration {
 
+    private static final String DATABASE = "database";
+
     @Valid
     @NotNull
-    private DataSourceFactory database = new DataSourceFactory();
+    private DataSourceFactory dataSourceFactory = new DataSourceFactory();
 
-    /**
-     * Returns the factory for pooled {@code ManagedDataSource}s.
-     */
-    @JsonProperty("database")
+    @JsonProperty(DATABASE)
     public DataSourceFactory getDataSourceFactory() {
-        return database;
+      return dataSourceFactory;
     }
 
-    /**
-     * Sets the factory for pooled {@code ManagedDataSource}s.
-     */
-    @JsonProperty("database")
-    public void setDataSourceFactory(DataSourceFactory dataSourceFactory) {
-        this.database = dataSourceFactory;
+    @JsonProperty(DATABASE)
+    public void setDataSourceFactory(final DataSourceFactory dataSourceFactory) {
+      this.dataSourceFactory = dataSourceFactory;
     }
 
 }
