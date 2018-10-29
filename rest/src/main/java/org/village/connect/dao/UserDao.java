@@ -13,7 +13,8 @@ import org.jdbi.v3.sqlobject.statement.SqlUpdate;
 import java.util.List;
 
 /**
- * JDBI DAO layer 
+ * JDBI DAO layer
+ * 
  * @author ranjeet.kumar
  *
  */
@@ -26,8 +27,7 @@ public interface UserDao {
     @SqlQuery("select * from user where id = :id")
     public UserModel getUser(@Bind("id") final int id);
 
-    @SqlUpdate("insert into user(name, password) values(:name, :password)")
-//    @GetGeneratedKeys("id")
+    @SqlUpdate("insert into user(name, password, status, village, district, pincode) values(:name, :password, :status, :village, :district, :pincode )")
     void createUser(@BindBean final UserModel user);
 
     @SqlUpdate("update user set name = coalesce(:name, name), code = coalesce(:password, password) where id = :id")

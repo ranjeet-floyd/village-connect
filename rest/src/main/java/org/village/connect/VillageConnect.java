@@ -1,5 +1,7 @@
 package org.village.connect;
 
+
+
 import org.village.connect.dao.UserDao;
 import org.village.connect.resources.UserResource;
 import org.village.connect.service.UserService;
@@ -10,16 +12,14 @@ import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
+import io.dropwizard.jdbi3.JdbiFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.jdbi.v3.core.Jdbi;
-import org.jdbi.v3.sqlobject.SqlObjectPlugin;
 
 import java.io.IOException;
 import java.util.function.Consumer;
-
-import javax.sql.DataSource;
 
 /**
  * @author ranjeet.kumar
@@ -59,11 +59,14 @@ public class VillageConnect extends Application<VillageConnectConfiguration> {
     @Override
     public void run(VillageConnectConfiguration configuration, Environment environment) {
         // Datasource configuration
-        final DataSource dataSource =
-            configuration.getDataSourceFactory().build(environment.metrics(), SQL);
-        
-        Jdbi jdbi = Jdbi.create(dataSource);
-        jdbi.installPlugin(new SqlObjectPlugin());
+        JdbiFactory jdbiFactory  = new JdbiFactory();
+        Jdbi jdbi =  jdbiFactory.build(environment, configuration.getDataSourceFactory(), SQL);
+        //final DBIFactory factory = new DBIFactory();
+//        final DataSource dataSource =
+//            configuration.getDataSourceFactory().build(environment.metrics(), SQL);
+//        
+//        Jdbi jdbi = Jdbi.create(dataSource);
+//        jdbi.installPlugin(new SqlObjectPlugin());
         // Common modules
         environment.jersey().register(new AbstractBinder() {
             @Override
