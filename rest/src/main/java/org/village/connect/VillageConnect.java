@@ -2,8 +2,11 @@ package org.village.connect;
 
 
 
+import org.village.connect.dao.StudentDao;
 import org.village.connect.dao.UserDao;
+import org.village.connect.resources.StudentResource;
 import org.village.connect.resources.UserResource;
+import org.village.connect.service.StudentService;
 import org.village.connect.service.UserService;
 
 import com.google.common.reflect.ClassPath;
@@ -78,6 +81,9 @@ public class VillageConnect extends Application<VillageConnectConfiguration> {
         // register user resource service
         UserDao userDao =  jdbi.onDemand(UserDao.class);
         environment.jersey().register(new UserResource(new UserService(userDao)));
+        
+        StudentDao studentDao =  jdbi.onDemand(StudentDao.class);
+        environment.jersey().register(new StudentResource(new StudentService(studentDao)));
 
         // Resources
         registerModules("org.village.connect.resources", "Resource", (classInfo) -> {

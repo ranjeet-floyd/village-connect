@@ -18,7 +18,7 @@ public class Representation<T> {
     private final int code;
     
     @Nonnull
-    private final T data;
+    private final T message;
     
 
 }

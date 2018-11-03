@@ -70,7 +70,12 @@ public class UserResource {
       return new Representation<String>(HttpStatus.OK_200, userService.deleteUser(id));
     }
             
-    
+    @POST
+    @Path("login")
+    @Timed
+    public Representation<Boolean> login(@NotNull @Valid final UserModel user) {
+      return new Representation<Boolean>(HttpStatus.OK_200, userService.validate(user));
+    }
     
 
 }

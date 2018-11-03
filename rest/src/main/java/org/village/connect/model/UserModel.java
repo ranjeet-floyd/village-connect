@@ -1,6 +1,7 @@
 package org.village.connect.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -13,6 +14,7 @@ import javax.validation.constraints.Size;
 
 @Data
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
 public class UserModel {
 
@@ -28,24 +30,15 @@ public class UserModel {
     @NotEmpty
     private String password;
 
+    @Nonnegative
     private int status;
+    
+    @Nonnegative
+    private int type;
 
 
-    private Timestamp createdDate;
+    private Timestamp createDate;
 
     private Timestamp modifyDate;
-
-
-    @Size(max = 30)
-    @NotEmpty
-    private String village;
-
-    @Size(max = 30)
-    @NotEmpty
-    private String district;
-
-    @Nonnegative
-    private int pincode;
-
 
 }

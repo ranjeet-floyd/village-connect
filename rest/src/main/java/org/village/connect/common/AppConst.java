@@ -10,9 +10,11 @@ public interface AppConst {
     static final String DATABASE_UNEXPECTED_ERROR =
             "Unexpected error occurred while attempting to reach the database. Details: ";
 
-    static final String USER_NOT_FOUND = "User id %s not found.";
+    static final String DATA_NOT_FOUND = "Data  %s not found.";
 
     static final String SUCCESS = "Success...";
     static final String UNEXPECTED_ERROR = "An unexpected error occurred while deleting part.";
+
+    static final String USER_ALREADY_EXISTS = "User name %s already exists.";
 
 }
