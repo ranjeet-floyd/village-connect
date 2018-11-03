@@ -35,6 +35,17 @@ CREATE TABLE `village-connect`.`student` (
   `modifyDate` TIMESTAMP NOT NULL DEFAULT now(),
   PRIMARY KEY (`id`));
 
+ALTER TABLE `village-connect`.`student` 
+DROP FOREIGN KEY `user-user_id`;
+ALTER TABLE `village-connect`.`student` 
+CHANGE COLUMN `user_id` `userId` INT(11) NOT NULL ;
+ALTER TABLE `village-connect`.`student` 
+ADD CONSTRAINT `user-user_id`
+  FOREIGN KEY (`userId`)
+  REFERENCES `village-connect`.`user` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
 
 ALTER TABLE `village-connect`.`student` 
 ADD INDEX `user-user_id_idx` (`user_id` ASC);
@@ -44,3 +55,7 @@ ADD CONSTRAINT `user-user_id`
   REFERENCES `village-connect`.`user` (`id`)
   ON DELETE NO ACTION
   ON UPDATE NO ACTION;
+
+
+ALTER TABLE `village-connect`.`student` 
+CHANGE COLUMN `class` `std` VARCHAR(45) NOT NULL ;

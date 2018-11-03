@@ -1,8 +1,22 @@
+# logging:
+#   level: INFO
+#   loggers:
+#     org.village: DEBUG
 logging:
-  level: INFO
+  level: DEBUG
   loggers:
-    org.village: DEBUG
-
+    "io.dropwizard": INFO
+    "org.eclipse": INFO
+    "org.village":
+      level: DEBUG
+      additive: false
+      appenders:
+        - type: file
+          currentLogFilename: ./application.log
+          archivedLogFilenamePattern: ./application-%d.log.gz
+          archivedFileCount: 5
+  appenders:
+    - type: console
 # database:
 #   driverClass: org.h2.Driver
 #   user: sa
