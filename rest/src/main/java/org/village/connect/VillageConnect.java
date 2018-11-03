@@ -25,11 +25,10 @@ import java.io.IOException;
 import java.util.function.Consumer;
 
 /**
- * @author ranjeet.kumar
- * Dropwizard based application launcher.
+ * @author ranjeet.kumar Dropwizard based application launcher.
  */
 public class VillageConnect extends Application<VillageConnectConfiguration> {
-    
+
     private static final String SQL = "sql";
     private static final String VILLAGE_CONNECT_REST_SERVICE = "Village connect rest service";
 
@@ -62,14 +61,14 @@ public class VillageConnect extends Application<VillageConnectConfiguration> {
     @Override
     public void run(VillageConnectConfiguration configuration, Environment environment) {
         // Datasource configuration
-        JdbiFactory jdbiFactory  = new JdbiFactory();
-        Jdbi jdbi =  jdbiFactory.build(environment, configuration.getDataSourceFactory(), SQL);
-        //final DBIFactory factory = new DBIFactory();
-//        final DataSource dataSource =
-//            configuration.getDataSourceFactory().build(environment.metrics(), SQL);
-//        
-//        Jdbi jdbi = Jdbi.create(dataSource);
-//        jdbi.installPlugin(new SqlObjectPlugin());
+        JdbiFactory jdbiFactory = new JdbiFactory();
+        Jdbi jdbi = jdbiFactory.build(environment, configuration.getDataSourceFactory(), SQL);
+        // final DBIFactory factory = new DBIFactory();
+        // final DataSource dataSource =
+        // configuration.getDataSourceFactory().build(environment.metrics(), SQL);
+        //
+        // Jdbi jdbi = Jdbi.create(dataSource);
+        // jdbi.installPlugin(new SqlObjectPlugin());
         // Common modules
         environment.jersey().register(new AbstractBinder() {
             @Override
@@ -79,11 +78,11 @@ public class VillageConnect extends Application<VillageConnectConfiguration> {
             }
         });
         // register user resource service
-        UserDao userDao =  jdbi.onDemand(UserDao.class);
+        UserDao userDao = jdbi.onDemand(UserDao.class);
         environment.jersey().register(new UserResource(new UserService(userDao)));
-        
-        StudentDao studentDao =  jdbi.onDemand(StudentDao.class);
-        environment.jersey().register(new StudentResource(new StudentService(studentDao)));
+
+        StudentDao studentDao = jdbi.onDemand(StudentDao.class);
+        environment.jersey().register(new StudentResource(new StudentService(studentDao, userDao)));
 
         // Resources
         registerModules("org.village.connect.resources", "Resource", (classInfo) -> {
